@@ -14,7 +14,14 @@
       "Bash(Select-Object Name, PSIsContainer)",
       "PowerShell(ls -Path \"C:\\\\MyDeveloper\\\\test-multi-agent\" | Select-Object Name, @{Name=\"IsDirectory\";Expression={$_.PSIsContainer}})",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(docker compose *)",
+      "Bash(docker system *)",
+      "Bash(tee docker-build.log)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(curl -s http://localhost:3000/api/lanes)",
+      "Bash(docker exec *)",
+      "Bash(git commit -m 'fix: Correct Dockerfile npm package manager and .dockerignore for successful Docker build *)"
     ]
   }
 }

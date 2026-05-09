@@ -16,7 +16,6 @@
 
 # Node and package files (will be fresh installed)
 node_modules
-package-lock.json
 npm-debug.log
 pnpm-debug.log
 

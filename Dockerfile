@@ -11,7 +11,6 @@ RUN npm ci
 
 # Copy source code and configuration files
 COPY src ./src
-COPY scripts ./scripts
 COPY next.config.ts tsconfig.json tailwind.config.ts postcss.config.js ./
 
 # Build the Next.js application
