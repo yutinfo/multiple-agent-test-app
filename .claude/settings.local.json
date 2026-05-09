@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p .claude/agents && mkdir -p docs && mkdir -p scripts)",
+      "Bash(Get-ChildItem -Force)",
+      "Bash(Select-Object Name)",
+      "Bash(ls -la \"C:\\\\MyDeveloper\\\\test-multi-agent\\\\\" | head -20)",
+      "Bash(npm run *)",
+      "Bash(npm install *)",
+      "Bash(Get-ChildItem -Recurse -Path \"C:\\\\MyDeveloper\\\\test-multi-agent\" -Include \"*.ts\",\"*.tsx\",\"*.json\")",
+      "Bash(Select-Object FullName)",
+      "Bash(npx tsc *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\MyDeveloper\\\\test-multi-agent\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)",
+      "PowerShell(ls -Path \"C:\\\\MyDeveloper\\\\test-multi-agent\" | Select-Object Name, @{Name=\"IsDirectory\";Expression={$_.PSIsContainer}})",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # MongoDB database service
+  mongo:
+    image: mongo:7
+    container_name: kanban-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+    # Optional: add healthcheck for production
+    # healthcheck:
+    #   test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+    #   start_period: 40s
+
+  # Next.js application service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kanban-app
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/kanban
+      - NODE_ENV=production
+    depends_on:
+      mongo:
+        condition: service_started
+    restart: unless-stopped
+
+# Named volume for persistent MongoDB data
+volumes:
+  mongo-data:
+    driver: local

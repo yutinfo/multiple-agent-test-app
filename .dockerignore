@@ -1,0 +1,53 @@
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Claude Code directory
+.claude
+
+# Node and package files (will be fresh installed)
+node_modules
+package-lock.json
+npm-debug.log
+pnpm-debug.log
+
+# Next.js build artifacts (will be rebuilt)
+.next
+out
+dist
+build
+
+# Environment files (use .env.example instead)
+.env
+.env.local
+.env.*.local
+
+# Documentation and other non-essential files
+README.md
+docs
+LICENSE
+CHANGELOG.md
+
+# Test and development scripts
+scripts
+*.test.ts
+*.spec.ts
+coverage
+
+# TypeScript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Temporary files
+*.tmp
+tmp
+temp
