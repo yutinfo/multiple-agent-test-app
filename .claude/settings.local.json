@@ -21,7 +21,12 @@
       "Bash(curl -s http://localhost:3000)",
       "Bash(curl -s http://localhost:3000/api/lanes)",
       "Bash(docker exec *)",
-      "Bash(git commit -m 'fix: Correct Dockerfile npm package manager and .dockerignore for successful Docker build *)"
+      "Bash(git commit -m 'fix: Correct Dockerfile npm package manager and .dockerignore for successful Docker build *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\MyDeveloper\\\\test-multi-agent\\\\.claude\\\\worktrees\\\\vigorous-shirley-632f76\" -Recurse -Filter \"tailwind.config.*\" -ErrorAction SilentlyContinue)",
+      "Bash(pnpm build *)",
+      "Bash(grep -r \"bg-blue\\\\|text-blue\\\\|bg-gray-100\\\\|focus:ring-blue\\\\|focus:border-blue\" /C:/MyDeveloper/test-multi-agent/.claude/worktrees/vigorous-shirley-632f76/src/components --include=\"*.tsx\" | head -20)",
+      "Bash(cat)",
+      "Read(//tmp/**)"
     ]
   }
 }

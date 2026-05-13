@@ -36,9 +36,9 @@ export default async function HomePage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 p-8">
+    <main className="min-h-screen bg-soft-white p-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-800 mb-8">Kanban Board</h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-8">Kanban Board</h1>
 
         {error ? (
           <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg">
@@ -50,7 +50,7 @@ export default async function HomePage() {
         ) : (
           <div className="flex items-center justify-center h-96">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto mb-4"></div>
               <p className="text-gray-600">Loading board...</p>
             </div>
           </div>

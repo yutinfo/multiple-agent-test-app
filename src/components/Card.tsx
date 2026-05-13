@@ -27,12 +27,12 @@ export default function CardComponent({ card, onClick }: CardComponentProps) {
       {...listeners}
       onClick={onClick}
       className={`
-        bg-white border border-gray-200 rounded-lg shadow p-3 cursor-grab active:cursor-grabbing
-        hover:shadow-lg transition-shadow duration-200
-        ${isDragging ? 'ring-2 ring-blue-400' : ''}
+        bg-white border border-gray-100 rounded-md shadow p-3 cursor-grab active:cursor-grabbing
+        hover:border-teal-200 hover:shadow-md transition-all duration-200
+        ${isDragging ? 'ring-2 ring-teal-400 bg-teal-50' : ''}
       `}
     >
-      <h3 className="font-semibold text-gray-800 text-sm mb-1 line-clamp-2">
+      <h3 className="font-medium text-gray-900 text-sm mb-1 line-clamp-2">
         {card.title}
       </h3>
       {card.description && (
