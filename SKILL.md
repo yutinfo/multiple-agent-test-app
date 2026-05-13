@@ -33,7 +33,7 @@ This skill provides a structured workflow for:
 
 ### Multi-Agent Roles
 
-The project uses **5 specialized Claude agents** (all running on Haiku model for speed):
+The project uses **6 specialized Claude agents** (all running on Haiku model for speed):
 
 1. **Architect** (`.claude/agents/architect.md`)
    - Designs database schema
@@ -59,6 +59,12 @@ The project uses **5 specialized Claude agents** (all running on Haiku model for
    - Performs code quality reviews
    - Validates implementation against specifications
    - Ensures best practices
+
+6. **QA Engineer** (`.claude/agents/qa.md`)
+   - Writes unit tests for API routes
+   - Writes component tests for React UI
+   - Creates integration tests for critical flows
+   - Verifies test coverage >80%
 
 ## Quick Start
 
@@ -106,7 +112,8 @@ docker compose down -v
 ├── backend-dev.md        # API implementation
 ├── frontend-dev.md       # UI components
 ├── devops.md            # Docker configuration
-└── reviewer.md          # Quality assurance
+├── reviewer.md          # Quality assurance
+└── qa.md                # Unit & integration tests
 
 src/
 ├── app/
@@ -254,24 +261,42 @@ type Board = {
 
 ### For Using Multi-Agents
 
+The agents work best in a **sequential workflow** with clear dependencies:
+
+```
+Architect → Backend-Dev → Frontend-Dev → DevOps → Reviewer → QA
+```
+
+Each agent:
+1. Reads context from previous agent's work
+2. Completes their specific task
+3. Hands off to next agent
+
+Example workflow:
 ```bash
-# Trigger specific agent to handle a task
-# Agent files in .claude/agents/ use Haiku model
+# 1. Architect designs the schema & API
+# Request: "Update the Card schema to add priority field"
+# → Updates src/types/index.ts and docs/API.md
 
-# Example: Ask architect to update schema
-# → Architect updates src/types/index.ts and docs/API.md
+# 2. Backend-Dev implements the API
+# Request: "Implement the new Card endpoints with priority support"
+# → Updates API routes in src/app/api/
 
-# Example: Ask backend-dev to add new endpoint
-# → Backend updates API routes in src/app/api/
+# 3. Frontend-Dev builds the UI
+# Request: "Add priority field to Card component and form"
+# → Updates components and styling
 
-# Example: Ask frontend-dev to style components
-# → Frontend updates component and CSS
+# 4. DevOps ensures Docker works
+# Request: "Update Docker config if needed"
+# → Verifies Dockerfile and docker-compose.yml
 
-# Example: Ask devops to update Docker config
-# → DevOps updates Dockerfile and docker-compose.yml
+# 5. Reviewer checks code quality
+# Request: "Review all changes for quality and best practices"
+# → Validates types, API contracts, security
 
-# Example: Run reviewer for quality checks
-# → Reviewer validates implementation and provides feedback
+# 6. QA writes tests
+# Request: "Write unit and integration tests for priority feature"
+# → Creates comprehensive test coverage
 ```
 
 ## Common Tasks

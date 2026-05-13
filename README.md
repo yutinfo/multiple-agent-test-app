@@ -13,7 +13,7 @@ A minimal Kanban board application with drag-and-drop support, built with Next.j
 
 ## 🏗️ Multi-Agent Architecture
 
-This project uses **5 Claude Code subagents** (all using Haiku model) to build different parts:
+This project uses **6 Claude Code subagents** (all using Haiku model) in sequential workflow:
 
 | Agent | Role | Output |
 |-------|------|--------|
@@ -22,6 +22,12 @@ This project uses **5 Claude Code subagents** (all using Haiku model) to build d
 | **frontend-dev** | UI components & drag-drop | `src/components/`, `src/app/page.tsx` |
 | **devops** | Docker setup | `Dockerfile`, `docker-compose.yml` |
 | **reviewer** | Quality gate | Code review reports |
+| **qa** | Unit & integration tests | `*.test.ts`, `*.test.tsx`, coverage reports |
+
+**Sequential Workflow:**
+```
+Architect → Backend-Dev → Frontend-Dev → DevOps → Reviewer → QA
+```
 
 **Key Rule:** All subagent files in `.claude/agents/` must have `model: haiku` in frontmatter.
 
@@ -171,7 +177,10 @@ See `docs/API.md` for detailed specifications.
 - [ ] UI components built (frontend-dev)
 - [ ] Frontend review passed (reviewer)
 - [ ] Docker setup complete (devops)
-- [ ] Final review passed (reviewer)
+- [ ] Code quality review passed (reviewer)
+- [ ] Unit & integration tests written (qa)
+- [ ] Test coverage >80% (qa)
+- [ ] All tests pass (qa)
 - [ ] `docker compose up --build` runs without errors
 - [ ] Board loads with 3 lanes
 - [ ] CRUD operations work
@@ -192,13 +201,24 @@ See `docs/API.md` for detailed specifications.
 
 1. **Haiku Model Constraint:** All agents in `.claude/agents/` use Haiku for speed and cost. If an agent struggles, **improve the prompt clarity** rather than changing the model.
 
-2. **Workflow:** Follow the sequential workflow in `.claude/agents/` to maintain clear dependencies.
+2. **Sequential Workflow:** Always follow the agent flow in order:
+   - **Architect** → defines schema & types
+   - **Backend-Dev** → implements API
+   - **Frontend-Dev** → builds UI
+   - **DevOps** → configures Docker
+   - **Reviewer** → validates quality
+   - **QA** → writes tests
+   
+   Each agent reads the previous agent's output and hands off to the next.
 
 3. **Type Safety:** Always import types from `src/types/index.ts`.
 
 4. **Database Operations:** Use MongoDB native driver only—no Mongoose.
 
-5. **Testing:** Run `pnpm seed` to populate test data before manual testing.
+5. **Testing:** 
+   - Run `pnpm seed` to populate test data before manual testing
+   - QA agent creates `*.test.ts` and `*.test.tsx` files
+   - Run `pnpm test` to execute all tests
 
 ## 🤝 Contributing
 
