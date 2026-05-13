@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # MongoDB database service
   mongo:
@@ -23,18 +21,30 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: dev
     container_name: kanban-app
+    command: npm run dev
     ports:
       - "3000:3000"
     environment:
       - MONGODB_URI=mongodb://mongo:27017/kanban
-      - NODE_ENV=production
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
     depends_on:
       mongo:
         condition: service_started
+    volumes:
+      - .:/app
+      - app-node-modules:/app/node_modules
+      - app-next:/app/.next
     restart: unless-stopped
 
 # Named volume for persistent MongoDB data
 volumes:
   mongo-data:
+    driver: local
+  app-node-modules:
+    driver: local
+  app-next:
     driver: local

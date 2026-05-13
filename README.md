@@ -60,10 +60,10 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ### Docker Setup
 
 ```bash
-# Build and start all services
+# Build and start all services in development mode
 docker compose up --build
 
-# The app will be available at http://localhost:3000
+# The app will be available at http://localhost:3000 with hot reload
 # MongoDB is automatically started
 
 # Stop services

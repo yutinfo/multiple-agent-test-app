@@ -1,4 +1,20 @@
-# Multi-stage build: Stage 1 - Builder
+# Base stage with dependencies installed for local development.
+FROM node:20-alpine AS dev
+
+WORKDIR /app
+
+# Install all dependencies so the container can run next dev directly.
+COPY package.json package-lock.json ./
+RUN npm ci
+
+ENV NODE_ENV=development
+
+# The source code is bind-mounted in docker-compose for live reload.
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
+
+# Multi-stage build: Stage 2 - Builder
 FROM node:20-alpine AS builder
 
 WORKDIR /app
@@ -10,14 +26,13 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 # Copy source code and configuration files
-COPY src ./src
-COPY next.config.ts tsconfig.json tailwind.config.ts postcss.config.js ./
+COPY . .
 
 # Build the Next.js application
 RUN npm run build
 
-# Multi-stage build: Stage 2 - Production
-FROM node:20-alpine
+# Multi-stage build: Stage 3 - Production
+FROM node:20-alpine AS production
 
 WORKDIR /app
 
