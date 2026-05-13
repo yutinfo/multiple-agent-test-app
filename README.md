@@ -4,7 +4,7 @@ A minimal Kanban board application with drag-and-drop support, built with Next.j
 
 ## 🎯 Features
 
-- ✅ Three default lanes: Todo, In Progress, Done
+- ✅ Seeded lanes with dynamic lane management
 - ✅ Create, read, update, delete cards
 - ✅ Drag and drop cards between lanes
 - ✅ Reorder cards within a lane
@@ -101,6 +101,7 @@ docker compose down -v
 │   │   ├── Lane.tsx
 │   │   ├── Card.tsx
 │   │   ├── NewCardForm.tsx
+│   │   ├── NewLaneForm.tsx
 │   │   └── CardModal.tsx
 │   ├── lib/
 │   │   └── mongodb.ts
@@ -127,6 +128,8 @@ See `docs/API.md` for detailed specifications.
 ### Main Endpoints
 
 - `GET /api/lanes` — Get all lanes with cards
+- `POST /api/lanes` — Create a lane
+- `DELETE /api/lanes/:id` — Delete a lane
 - `POST /api/cards` — Create a card
 - `PATCH /api/cards/:id` — Update a card
 - `DELETE /api/cards/:id` — Delete a card
@@ -182,7 +185,7 @@ See `docs/API.md` for detailed specifications.
 - [ ] Test coverage >80% (qa)
 - [ ] All tests pass (qa)
 - [ ] `docker compose up --build` runs without errors
-- [ ] Board loads with 3 lanes
+- [ ] Board loads with the seeded lanes
 - [ ] CRUD operations work
 - [ ] Drag-and-drop works
 - [ ] Data persists after refresh

@@ -36,26 +36,24 @@ export default async function HomePage() {
   }
 
   return (
-    <main className="min-h-screen bg-soft-white p-8">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">Kanban Board</h1>
-
-        {error ? (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg">
+    <main className="min-h-screen bg-soft-white">
+      {error ? (
+        <div className="mx-auto max-w-7xl px-6 py-8">
+          <div className="rounded-lg border border-red-200 bg-red-50 px-6 py-4 text-red-700">
             <p className="font-semibold">Error loading board</p>
             <p className="text-sm">{error}</p>
           </div>
-        ) : lanesData ? (
-          <Board initialLanes={lanesData} />
-        ) : (
-          <div className="flex items-center justify-center h-96">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto mb-4"></div>
-              <p className="text-gray-600">Loading board...</p>
-            </div>
+        </div>
+      ) : lanesData ? (
+        <Board initialLanes={lanesData} />
+      ) : (
+        <div className="flex min-h-screen items-center justify-center">
+          <div className="text-center">
+            <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-teal-500" />
+            <p className="text-gray-600">Loading board...</p>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </main>
   );
 }

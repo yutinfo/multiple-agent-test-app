@@ -91,6 +91,155 @@ GET /api/lanes
 
 ---
 
+### POST /api/lanes
+
+Create a new lane at the end of the board.
+
+**Request:**
+```http
+POST /api/lanes
+Content-Type: application/json
+
+{
+  "title": "Review"
+}
+```
+
+**Parameters:**
+- `title` (string, required): Lane title. It is trimmed before validation.
+
+**Response:** `201 Created`
+```json
+{
+  "ok": true,
+  "data": {
+    "_id": "lane-004",
+    "title": "Review",
+    "order": 3,
+    "createdAt": "2026-05-13T12:00:00Z"
+  }
+}
+```
+
+**Error Response:** `400 Bad Request`
+```json
+{
+  "ok": false,
+  "error": "Lane title is required"
+}
+```
+
+**Error Response:** `409 Conflict`
+```json
+{
+  "ok": false,
+  "error": "Lane title already exists"
+}
+```
+
+---
+
+### DELETE /api/lanes/:id
+
+Delete an empty lane and renumber the remaining lanes so `order` stays continuous.
+
+**Request:**
+```http
+DELETE /api/lanes/lane-004
+```
+
+**Response:** `200 OK`
+```json
+{
+  "ok": true,
+  "data": {
+    "_id": "lane-004"
+  }
+}
+```
+
+**Error Response:** `404 Not Found`
+```json
+{
+  "ok": false,
+  "error": "Lane not found"
+}
+```
+
+**Error Response:** `409 Conflict`
+```json
+{
+  "ok": false,
+  "error": "Lane cannot be deleted because it still contains cards"
+}
+```
+
+**Error Response:** `409 Conflict`
+```json
+{
+  "ok": false,
+  "error": "At least one lane must remain"
+}
+```
+
+---
+
+### PATCH /api/lanes/:id/move
+
+Reorder a lane to a new position on the board without changing any cards.
+
+**Request:**
+```http
+PATCH /api/lanes/lane-004/move
+Content-Type: application/json
+
+{
+  "targetOrder": 1
+}
+```
+
+**Parameters:**
+- `targetOrder` (integer, required): The final 0-based position for the lane after reorder.
+
+**Behavior Notes:**
+- The lane identified by `:id` is moved to `targetOrder`.
+- Remaining lanes are renumbered so `order` stays continuous from `0` to `n-1`.
+- Cards in every lane are left untouched. Their `laneId` and `order` values do not change.
+- If the lane is already at `targetOrder`, the request is treated as a no-op and still returns success.
+- This endpoint does not define a `409 Conflict` case. Clients should refetch if they suspect stale UI state.
+- Invalid or missing `targetOrder` values return `400 Bad Request`.
+
+**Response:** `200 OK`
+```json
+{
+  "ok": true,
+  "data": {
+    "_id": "lane-004",
+    "title": "Review",
+    "order": 1,
+    "createdAt": "2026-05-13T12:00:00Z"
+  }
+}
+```
+
+**Error Response:** `400 Bad Request`
+```json
+{
+  "ok": false,
+  "error": "Invalid targetOrder: order out of bounds"
+}
+```
+
+**Error Response:** `404 Not Found`
+```json
+{
+  "ok": false,
+  "error": "Lane not found"
+}
+```
+
+---
+
 ### POST /api/cards
 
 Create a new card in a specified lane.
@@ -326,7 +475,9 @@ Request:
 - `201 Created`: Successful POST request (resource created)
 - `400 Bad Request`: Invalid request (missing/invalid fields, validation error)
 - `404 Not Found`: Resource not found (lane or card)
+- `409 Conflict`: Business-rule violation (duplicate lane title, non-empty lane delete, last lane delete)
 - `500 Internal Server Error`: Server-side error
+- `PATCH /api/lanes/:id/move` uses only `200`, `400`, and `404` in this MVP contract
 
 ---
 
@@ -361,11 +512,13 @@ Request:
 
 ## Default Lanes
 
-When the database is seeded, exactly 3 lanes are created in this order:
+When the database is seeded, 3 starter lanes are created in this order:
 
 1. **Todo** (order: 0)
 2. **In Progress** (order: 1)
 3. **Done** (order: 2)
+
+The board supports creating, deleting, and reordering lanes at runtime, so the live lane count and order are dynamic after startup.
 
 ---
 
@@ -374,5 +527,6 @@ When the database is seeded, exactly 3 lanes are created in this order:
 - All timestamps are ISO 8601 format
 - Card order within a lane is managed by the `order` field
 - When reordering cards, the backend must maintain correct `order` values
+- Reordering a lane must not change any cards in that lane
 - The move endpoint handles both lane changes and reordering in a single operation
 - No authentication is required for this MVP

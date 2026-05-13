@@ -70,6 +70,34 @@ export type LaneWithCards = Lane & {
 export type GetLanesResponse = ApiResponse<LaneWithCards[]>;
 
 // ============================================================================
+// POST /api/lanes
+// ============================================================================
+
+export type CreateLaneRequest = {
+  title: string;
+};
+
+export type CreateLaneResponse = ApiResponse<Lane>;
+
+// ============================================================================
+// DELETE /api/lanes/:id
+// ============================================================================
+
+export type DeleteLaneRequest = undefined;
+
+export type DeleteLaneResponse = ApiResponse<{ _id: string }>;
+
+// ============================================================================
+// PATCH /api/lanes/:id/move
+// ============================================================================
+
+export type MoveLaneRequest = {
+  targetOrder: number;
+};
+
+export type MoveLaneResponse = ApiResponse<Lane>;
+
+// ============================================================================
 // POST /api/cards
 // ============================================================================
 

@@ -15,6 +15,7 @@ export default function NewCardForm({
   onCancel,
 }: NewCardFormProps) {
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -35,6 +36,7 @@ export default function NewCardForm({
           body: JSON.stringify({
             laneId,
             title: title.trim(),
+            description: description.trim() || undefined,
           }),
         });
 
@@ -46,6 +48,7 @@ export default function NewCardForm({
 
         onCardCreated(data.data);
         setTitle('');
+        setDescription('');
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to create card');
       }
@@ -62,6 +65,14 @@ export default function NewCardForm({
         disabled={isPending}
         className="w-full px-3 py-2 text-sm border border-gray-300 rounded bg-white text-gray-900 placeholder-gray-600 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 disabled:opacity-50"
         autoFocus
+      />
+      <textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        placeholder="Card description..."
+        disabled={isPending}
+        rows={3}
+        className="w-full resize-none rounded border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-600 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 disabled:opacity-50"
       />
       {error && (
         <p className="text-xs text-red-600">{error}</p>

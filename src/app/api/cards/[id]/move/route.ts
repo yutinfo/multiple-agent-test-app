@@ -152,10 +152,10 @@ export async function PATCH(
           updatedAt: new Date(),
         },
       },
-      { returnDocument: 'after' }
+      { returnDocument: 'after', includeResultMetadata: false }
     );
 
-    if (!result || !result.value) {
+    if (!result) {
       return NextResponse.json(
         {
           ok: false,
@@ -165,15 +165,14 @@ export async function PATCH(
       );
     }
 
-    const cardValue = result.value as CardDoc;
     const updatedCard: Card = {
-      _id: cardValue._id.toString(),
-      laneId: typeof cardValue.laneId === 'string' ? cardValue.laneId : cardValue.laneId.toString(),
-      title: cardValue.title,
-      description: cardValue.description,
-      order: cardValue.order,
-      createdAt: cardValue.createdAt,
-      updatedAt: cardValue.updatedAt,
+      _id: result._id.toString(),
+      laneId: typeof result.laneId === 'string' ? result.laneId : result.laneId.toString(),
+      title: result.title,
+      description: result.description,
+      order: result.order,
+      createdAt: result.createdAt,
+      updatedAt: result.updatedAt,
     };
 
     return NextResponse.json(
