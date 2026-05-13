@@ -60,7 +60,7 @@ export default function NewCardForm({
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Card title..."
         disabled={isPending}
-        className="w-full px-3 py-2 text-sm border border-gray-300 rounded bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-50"
+        className="w-full px-3 py-2 text-sm border border-gray-300 rounded bg-white text-gray-900 placeholder-gray-600 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 disabled:opacity-50"
         autoFocus
       />
       {error && (
@@ -70,7 +70,7 @@ export default function NewCardForm({
         <button
           type="submit"
           disabled={isPending}
-          className="flex-1 px-3 py-2 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 text-white text-sm font-medium rounded transition-colors"
+          className="flex-1 px-3 py-2 bg-teal-600 hover:bg-teal-700 disabled:bg-teal-500 text-white text-sm font-medium rounded transition-colors"
         >
           {isPending ? 'Adding...' : 'Add'}
         </button>
@@ -78,7 +78,7 @@ export default function NewCardForm({
           type="button"
           onClick={onCancel}
           disabled={isPending}
-          className="flex-1 px-3 py-2 bg-gray-300 hover:bg-gray-400 disabled:bg-gray-200 text-gray-800 text-sm font-medium rounded transition-colors"
+          className="flex-1 px-3 py-2 bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 text-gray-600 hover:text-gray-700 text-sm font-medium rounded transition-colors"
         >
           Cancel
         </button>

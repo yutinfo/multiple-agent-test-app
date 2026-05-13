@@ -35,13 +35,13 @@ export default function Lane({
     <>
       <div
         ref={setNodeRef}
-        className="flex-shrink-0 w-80 bg-gray-100 border border-gray-300 rounded-lg shadow-md p-4"
+        className="flex-shrink-0 w-80 bg-white border border-gray-200 rounded-lg shadow-md p-4 hover:border-teal-200 transition-colors"
       >
         {/* Lane Header */}
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-gray-800">{lane.title}</h2>
-            <p className="text-sm text-gray-500">{lane.cards.length} card(s)</p>
+            <h2 className="text-lg font-semibold text-gray-900">{lane.title}</h2>
+            <p className="text-sm text-gray-600">{lane.cards.length} card(s)</p>
           </div>
         </div>
 
@@ -68,7 +68,7 @@ export default function Lane({
         {!showNewCardForm ? (
           <button
             onClick={() => setShowNewCardForm(true)}
-            className="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded transition-colors"
+            className="w-full px-4 py-2 bg-teal-500 hover:bg-teal-600 text-white text-sm font-medium rounded transition-colors"
           >
             + Add Card
           </button>
